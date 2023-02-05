@@ -1,0 +1,24 @@
+name: MyToDo CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3 
+      - name: set node.js version ${{ matrix.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: install dependencies 
+        run: npm ci
+
+      - name: lint
+        run: npm run lint
